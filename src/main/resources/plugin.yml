@@ -1,0 +1,10 @@
+name: SpacelifeFarmworld
+version: 1.0.0
+main: de.petropia.farmworld.Farmworld
+description: "Plugin to manage behavior for the farm world"
+author: Professor_Sam
+api-version: '1.19'
+load: STARTUP
+depend:
+  - "TurtleServer"
+  - "SpacelifeCore"
