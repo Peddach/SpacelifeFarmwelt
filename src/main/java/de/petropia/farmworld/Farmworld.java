@@ -17,7 +17,7 @@ public class Farmworld extends PetropiaPlugin {
         saveDefaultConfig();
         saveConfig();
         reloadConfig();
-        new FarmworldManager().checkFarmworlds();
+        new FarmworldManager().checkWorld();
     }
 
     public static Farmworld getInstance() {
