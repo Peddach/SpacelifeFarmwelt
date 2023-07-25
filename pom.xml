@@ -46,5 +46,11 @@
             <artifactId>SpaceLifeCore</artifactId>
             <version>1.0.0</version>
         </dependency>
+        <dependency>
+            <groupId>de.dytanic.cloudnet</groupId>
+            <artifactId>cloudnet-driver</artifactId>
+            <version>3.4.5-RELEASE</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 </project>

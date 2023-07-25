@@ -1,5 +1,6 @@
 package de.petropia.farmworld;
 
+import de.dytanic.cloudnet.driver.CloudNetDriver;
 import de.petropia.turtleServer.api.PetropiaPlugin;
 
 import java.time.Instant;
@@ -18,6 +19,7 @@ public class Farmworld extends PetropiaPlugin {
         saveConfig();
         reloadConfig();
         new FarmworldManager().checkWorld();
+        CloudNetDriver.getInstance().getEventManager().registerListener(new FarmworldCLMessageListener());
     }
 
     public static Farmworld getInstance() {
