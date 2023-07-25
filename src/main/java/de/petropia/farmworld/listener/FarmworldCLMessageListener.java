@@ -1,9 +1,10 @@
-package de.petropia.farmworld;
+package de.petropia.farmworld.listener;
 
 import de.dytanic.cloudnet.common.document.gson.JsonDocument;
 import de.dytanic.cloudnet.driver.channel.ChannelMessage;
 import de.dytanic.cloudnet.driver.event.EventListener;
 import de.dytanic.cloudnet.driver.event.events.channel.ChannelMessageReceiveEvent;
+import de.petropia.farmworld.Farmworld;
 
 public class FarmworldCLMessageListener {
 
