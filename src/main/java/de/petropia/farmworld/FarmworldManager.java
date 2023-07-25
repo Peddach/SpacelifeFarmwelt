@@ -108,6 +108,7 @@ public class FarmworldManager {
                 Instant nextDeleteTimestamp = getNextDelete();
                 Files.write(file.toPath(), Collections.singletonList(String.valueOf(nextDeleteTimestamp.getEpochSecond())));
                 Farmworld.setNextDelete(nextDeleteTimestamp);
+                Farmworld.getInstance().scheduleShutdown();
             } catch (IOException e) {
                 e.printStackTrace();
             }

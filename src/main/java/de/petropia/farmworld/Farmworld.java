@@ -4,7 +4,15 @@ import de.dytanic.cloudnet.driver.CloudNetDriver;
 import de.petropia.farmworld.listener.FarmworldCLMessageListener;
 import de.petropia.farmworld.listener.PreventPVPListener;
 import de.petropia.farmworld.listener.SafePlayerRandomSpawn;
+import de.petropia.spacelifeCore.player.SpacelifeDatabase;
+import de.petropia.spacelifeCore.player.SpacelifePlayer;
+import de.petropia.spacelifeCore.scoreboard.ScoreboardElementRegistry;
+import de.petropia.spacelifeCore.teleport.StaticTeleportPoints;
 import de.petropia.turtleServer.api.PetropiaPlugin;
+import de.petropia.turtleServer.server.TurtleServer;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import org.bukkit.Bukkit;
 
 import java.time.Instant;
 
@@ -29,6 +37,20 @@ public class Farmworld extends PetropiaPlugin {
         if(available){
             getServer().getScheduler().runTask(this, playerRandomSpawnListener::onLoad);
         }
+        ScoreboardElementRegistry.registerElement(new WorldDeleteScoreboardElement());
+        if(nextDelete != null){
+            scheduleShutdown();
+        }
+    }
+
+    public void scheduleShutdown(){
+        Bukkit.getScheduler().runTaskLater(this, () -> TurtleServer.getInstance().shutdownServer(), (nextDelete.getEpochSecond() - Instant.now().getEpochSecond()) * 20);
+        Bukkit.getScheduler().runTaskLater(this, () -> Bukkit.getOnlinePlayers().forEach(player -> {
+            available = false;
+            getMessageUtil().sendMessage(player, Component.text("Die Farmwelt wird jetzt resettet!", NamedTextColor.RED));
+            SpacelifePlayer spacelifePlayer = SpacelifeDatabase.getInstance().getCachedPlayer(player.getUniqueId());
+            spacelifePlayer.teleportCrossServer(StaticTeleportPoints.SPAWN);
+        }), ((nextDelete.getEpochSecond() - Instant.now().getEpochSecond()) - 2*20) * 20);
     }
 
     public static Farmworld getInstance() {
