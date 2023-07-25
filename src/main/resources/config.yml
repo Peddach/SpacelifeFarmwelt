@@ -1,2 +1,2 @@
 dayToReset: 6 # 1=Monday 7=Sunday
-BlockToGenerate: 500
+BlockToGenerate: 500 # at least 200. Spawn radius is -100. Border radius is same
