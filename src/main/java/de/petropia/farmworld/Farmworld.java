@@ -1,6 +1,5 @@
 package de.petropia.farmworld;
 
-import de.dytanic.cloudnet.driver.CloudNetDriver;
 import de.petropia.farmworld.listener.FarmworldCLMessageListener;
 import de.petropia.farmworld.listener.PreventPVPListener;
 import de.petropia.farmworld.listener.SafePlayerRandomSpawn;
@@ -10,6 +9,8 @@ import de.petropia.spacelifeCore.scoreboard.ScoreboardElementRegistry;
 import de.petropia.spacelifeCore.teleport.StaticTeleportPoints;
 import de.petropia.turtleServer.api.PetropiaPlugin;
 import de.petropia.turtleServer.server.TurtleServer;
+import eu.cloudnetservice.driver.event.EventManager;
+import eu.cloudnetservice.driver.inject.InjectionLayer;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
@@ -30,7 +31,7 @@ public class Farmworld extends PetropiaPlugin {
         saveConfig();
         reloadConfig();
         new FarmworldManager().checkWorld();
-        CloudNetDriver.getInstance().getEventManager().registerListener(new FarmworldCLMessageListener());
+        InjectionLayer.ext().instance(EventManager.class).registerListener(new FarmworldCLMessageListener());
         this.getServer().getPluginManager().registerEvents(new PreventPVPListener(), this);
         SafePlayerRandomSpawn playerRandomSpawnListener = new SafePlayerRandomSpawn();
         this.getServer().getPluginManager().registerEvents(playerRandomSpawnListener, this);

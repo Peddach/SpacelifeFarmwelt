@@ -1,6 +1,5 @@
 package de.petropia.farmworld.listener;
 
-import de.dytanic.cloudnet.driver.event.EventListener;
 import de.petropia.farmworld.Farmworld;
 import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
@@ -52,7 +51,7 @@ public class SafePlayerRandomSpawn implements Listener {
         player.teleport(spawn, PlayerTeleportEvent.TeleportCause.PLUGIN);
     }
 
-    @EventListener
+    @EventHandler
     public void onChunkGenerate(ChunkPopulateEvent event){
         if(!event.getWorld().getName().equals("world")){
             return;

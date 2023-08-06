@@ -1,28 +1,28 @@
 package de.petropia.farmworld.listener;
 
-import de.dytanic.cloudnet.common.document.gson.JsonDocument;
-import de.dytanic.cloudnet.driver.channel.ChannelMessage;
-import de.dytanic.cloudnet.driver.event.EventListener;
-import de.dytanic.cloudnet.driver.event.events.channel.ChannelMessageReceiveEvent;
 import de.petropia.farmworld.Farmworld;
+import eu.cloudnetservice.driver.channel.ChannelMessage;
+import eu.cloudnetservice.driver.event.EventListener;
+import eu.cloudnetservice.driver.event.events.channel.ChannelMessageReceiveEvent;
+import eu.cloudnetservice.driver.network.buffer.DataBuf;
 
 public class FarmworldCLMessageListener {
 
     @EventListener
     public void onStatusQueryMessage(ChannelMessageReceiveEvent event){
-        if(!event.getChannel().equals("farmworld_status")){
+        if(!event.channel().equals("farmworld_status")){
             return;
         }
-        if(!event.isQuery()){
+        if(!event.query()){
             return;
         }
-        ChannelMessage message = event.getChannelMessage();
-        if(!message.getMessage().equals("world_status")){
+        ChannelMessage message = event.channelMessage();
+        if(!message.message().equals("world_status")){
             return;
         }
-        event.setQueryResponse(ChannelMessage.buildResponseFor(message).json(JsonDocument.newDocument()
-                .append("available", Farmworld.isAvailable())
-                .append("delete", Farmworld.getNextDelete().getEpochSecond()))
+        event.queryResponse(ChannelMessage.buildResponseFor(message).buffer(DataBuf.empty()
+                        .writeBoolean(Farmworld.isAvailable())
+                        .writeLong(Farmworld.getNextDelete().getEpochSecond()))
                 .build());
     }
 }
